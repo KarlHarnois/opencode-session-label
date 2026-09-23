@@ -2,7 +2,7 @@
 
 ## What this is
 
-An opencode TUI plugin. It renders a colored title badge above the prompt for
+An opencode TUI plugin. It renders a colored title badge inside the prompt for
 the active session so parallel sessions are visually distinguishable. The badge
 color is deterministic per session ID, with a per-session override stored in
 opencode's key-value store.
@@ -27,7 +27,7 @@ opencode's key-value store.
 - `src/key-value-store.ts` - the `KeyValueStore` port for persisted values.
 - `src/session-lookup.ts` - the `SessionLookup` port for session state.
 - `src/route-lookup.ts` - the `RouteLookup` port for the current route.
-- `src/session-prompt-slot.tsx` - renders the badge above the prompt.
+- `src/session-prompt-slot.tsx` - renders the badge in the prompt's right area.
 - `test/` - unit tests and hand-written doubles, no mocking library.
 - `package.json` - maps the `./tui` export to `src/index.tsx`.
 - `biome.json` - formatter and linter config.
