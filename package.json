@@ -4,5 +4,14 @@
   "type": "module",
   "exports": {
     "./tui": "./src/index.tsx"
+  },
+  "scripts": {
+    "check": "biome check .",
+    "fix": "biome check --write .",
+    "format": "biome format --write .",
+    "lint": "biome lint ."
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.14"
   }
 }

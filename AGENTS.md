@@ -24,6 +24,7 @@ opencode's key-value store.
 - `src/active-session.ts` - the session ID of the current route.
 - `src/session-prompt-slot.tsx` - renders the badge above the prompt.
 - `package.json` - maps the `./tui` export to `src/index.tsx`.
+- `biome.json` - formatter and linter config.
 - `README.md` - install instructions for Arch and NixOS.
 
 ## How it works
@@ -50,8 +51,14 @@ opencode's key-value store.
 
 ## Development
 
-There is no build, lint, typecheck, or test tooling in this repo. To try a
-change:
+Formatting and linting are handled by Biome. Run it with npm:
+
+- `npm run check` - report formatting and lint problems.
+- `npm run fix` - apply safe fixes, including import sorting.
+- `npm run format` - format only.
+- `npm run lint` - lint only.
+
+There is no build, typecheck, or test tooling in this repo. To try a change:
 
 1. Install the plugin per `README.md` (point `tui.json` at this directory).
 2. Restart opencode. Config and plugins load once at startup.

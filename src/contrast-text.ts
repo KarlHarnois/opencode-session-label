@@ -8,8 +8,10 @@ const CHANNEL_MAX = 255
 const HEX_RADIX = 16
 
 export class ContrastText {
-  static for(background: string): string {
-    return ContrastText.luminance(background) > LIGHT_TEXT_THRESHOLD ? DARK_TEXT : LIGHT_TEXT
+  constructor(private readonly background: string) {}
+
+  get value(): string {
+    return ContrastText.luminance(this.background) > LIGHT_TEXT_THRESHOLD ? DARK_TEXT : LIGHT_TEXT
   }
 
   private static luminance(hex: string): number {

@@ -11,6 +11,6 @@ export class Badge {
   }
 
   get foreground(): string {
-    return ContrastText.for(this.background)
+    return new ContrastText(this.background).value
   }
 }

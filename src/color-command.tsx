@@ -2,7 +2,7 @@
 import type { TuiPluginApi } from "@opencode-ai/plugin/tui"
 import { ActiveSession } from "./active-session"
 import type { ColorStore } from "./color-store"
-import { Palette } from "./palette"
+import type { Palette } from "./palette"
 
 const COMMAND_NAME = "session_label.color"
 const COMMAND_TITLE = "Session label color"
