@@ -12,6 +12,11 @@
     "lint": "biome lint .",
     "test": "node --import tsx --test test/*.test.ts"
   },
+  "dependencies": {
+    "@opentui/core": "0.4.5",
+    "@opentui/solid": "0.4.5",
+    "solid-js": "^1.9.12"
+  },
   "devDependencies": {
     "@biomejs/biome": "2.5.14",
     "tsx": "^4.20.6"

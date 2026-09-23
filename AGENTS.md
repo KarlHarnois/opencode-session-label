@@ -46,10 +46,15 @@ opencode's key-value store.
   `KeyValueStore`, `SessionLookup`, `RouteLookup`). `src/index.tsx` passes the
   real implementations; tests pass doubles. Never import `solid-js`,
   `@opentui/solid`, or `@opencode-ai/plugin/tui` outside their adapters.
-- Runtime imports (`@opentui/solid`, `solid-js`, `@opencode-ai/plugin/tui`) are
-  provided by opencode at load time. Never add them to `dependencies` or
-  `devDependencies`, since Node resolves a local copy first and would shadow
-  the host's single instance.
+- Runtime imports (`@opentui/core`, `@opentui/solid`, `solid-js`,
+  `@opencode-ai/plugin/tui`) are not injected into the plugin's module graph by
+  opencode 1.18.32. They must resolve from the plugin's own `node_modules`, so
+  `@opentui/core`, `@opentui/solid`, and `solid-js` are pinned in
+  `dependencies`. `@opencode-ai/plugin/tui` is imported for types only and
+  needs no runtime copy.
+- When a module fails to import, opencode swallows the error: the plugin simply
+  never registers and no toast or log line appears. The cause is visible only
+  with `opencode --print-logs`, which writes loader errors to stderr.
 
 ## Conventions
 
