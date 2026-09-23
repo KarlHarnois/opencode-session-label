@@ -45,7 +45,7 @@ export class ColorCommand {
     this.api.ui.dialog.replace(() => (
       <DialogSelect
         title={COMMAND_TITLE}
-        options={this.palette.entries.map((color) => ({ title: color, value: color }))}
+        options={this.palette.entries.map((color) => ({ title: color.name, value: color.hex }))}
         current={this.store.colorFor(sessionID, this.palette.colorFor(sessionID))}
         onSelect={(option) => this.select(sessionID, option.value as string)}
       />
