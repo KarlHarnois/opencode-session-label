@@ -4,6 +4,8 @@ import type { JSX } from "@opentui/solid"
 import { useTerminalDimensions } from "@opentui/solid"
 import type { BadgeView } from "./badge-view"
 
+const BADGE_RIGHT_PADDING_COLUMNS = 1
+
 export class SessionPromptSlot {
   constructor(
     private readonly api: TuiPluginApi,
@@ -17,7 +19,12 @@ export class SessionPromptSlot {
     const Slot = this.api.ui.Slot
     return (
       <box flexDirection="column" width="100%">
-        <box flexDirection="row" width="100%" justifyContent="flex-end">
+        <box
+          flexDirection="row"
+          width="100%"
+          justifyContent="flex-end"
+          paddingRight={BADGE_RIGHT_PADDING_COLUMNS}
+        >
           <text wrapMode="none">
             <span style={{ bg: badge().background, fg: badge().foreground }}>{badge().text}</span>
           </text>
