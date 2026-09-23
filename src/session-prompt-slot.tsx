@@ -4,7 +4,7 @@ import type { JSX } from "@opentui/solid"
 import { useTerminalDimensions } from "@opentui/solid"
 import type { BadgeView } from "./badge-view"
 
-const BADGE_RIGHT_PADDING_COLUMNS = 1
+const BADGE_RIGHT_PADDING_COLUMNS = 0
 
 export class SessionPromptSlot {
   constructor(
