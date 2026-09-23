@@ -16,6 +16,6 @@ describe("ContrastText", () => {
   })
 
   it("uses dark text on a readable mid-tone background", () => {
-    assert.equal(new ContrastText("#e06c75").value, "#1c1c1c")
+    assert.equal(new ContrastText("#eb5f57").value, "#1c1c1c")
   })
 })

@@ -10,7 +10,7 @@ describe("Palette", () => {
   })
 
   it("maps a known seed to a known color", () => {
-    assert.equal(new Palette().colorFor("session-a"), "#d19a66")
+    assert.equal(new Palette().colorFor("session-a"), "#fac35f")
   })
 
   it("returns a color from the palette", () => {
@@ -35,7 +35,7 @@ describe("Palette", () => {
   })
 
   it("names a known color", () => {
-    assert.equal(new Palette().nameFor("#d19a66"), "orange")
+    assert.equal(new Palette().nameFor("#f58b57"), "orange")
   })
 
   it("falls back to the hex for an unknown color", () => {

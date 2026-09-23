@@ -3,16 +3,13 @@ import { PaletteColor } from "./palette-color"
 const HASH_MULTIPLIER = 31
 
 const DEFAULT_COLORS = [
-  new PaletteColor("red", "#e06c75"),
-  new PaletteColor("green", "#98c379"),
-  new PaletteColor("yellow", "#e5c07b"),
-  new PaletteColor("blue", "#61afef"),
-  new PaletteColor("purple", "#c678dd"),
-  new PaletteColor("cyan", "#56b6c2"),
-  new PaletteColor("orange", "#d19a66"),
-  new PaletteColor("teal", "#7fbbb3"),
-  new PaletteColor("pink", "#d699b6"),
-  new PaletteColor("lime", "#a3be8c"),
+  new PaletteColor("red", "#eb5f57"),
+  new PaletteColor("orange", "#f58b57"),
+  new PaletteColor("yellow", "#fac35f"),
+  new PaletteColor("green", "#91c882"),
+  new PaletteColor("blue", "#82aadc"),
+  new PaletteColor("indigo", "#9b82c8"),
+  new PaletteColor("violet", "#c882b4"),
 ]
 
 export class Palette {
