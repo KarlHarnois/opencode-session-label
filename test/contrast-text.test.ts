@@ -14,4 +14,8 @@ describe("ContrastText", () => {
   it("accepts a background without a leading hash", () => {
     assert.equal(new ContrastText("ffffff").value, "#1c1c1c")
   })
+
+  it("uses dark text on a readable mid-tone background", () => {
+    assert.equal(new ContrastText("#e06c75").value, "#1c1c1c")
+  })
 })
