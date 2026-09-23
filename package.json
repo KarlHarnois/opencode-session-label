@@ -1,0 +1,8 @@
+{
+  "name": "opencode-session-label",
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    "./tui": "./session-label.tsx"
+  }
+}
