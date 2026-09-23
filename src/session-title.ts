@@ -1,10 +1,10 @@
-import type { TuiPluginApi } from "@opencode-ai/plugin/tui"
+import type { SessionLookup } from "./session-lookup"
 
 const GENERATED_TITLE_PATTERN = /^(New session|Child session) - \d{4}-\d{2}-\d{2}T/
 const PLACEHOLDER_TITLE = "new session"
 
 export class SessionTitle {
-  constructor(private readonly sessions: TuiPluginApi["state"]["session"]) {}
+  constructor(private readonly sessions: SessionLookup) {}
 
   display(sessionID: string): string {
     const title = this.sessions.get(sessionID)?.title

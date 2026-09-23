@@ -3,6 +3,7 @@ import type { TuiPluginApi } from "@opencode-ai/plugin/tui"
 import { ActiveSession } from "./active-session"
 import type { ColorStore } from "./color-store"
 import type { Palette } from "./palette"
+import type { RouteLookup } from "./route-lookup"
 
 const COMMAND_NAME = "session_label.color"
 const COMMAND_TITLE = "Session label color"
@@ -15,10 +16,11 @@ export class ColorCommand {
 
   constructor(
     private readonly api: TuiPluginApi,
+    route: RouteLookup,
     private readonly palette: Palette,
     private readonly store: ColorStore,
   ) {
-    this.activeSession = new ActiveSession(api.route)
+    this.activeSession = new ActiveSession(route)
   }
 
   register(): void {

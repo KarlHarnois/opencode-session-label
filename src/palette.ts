@@ -25,11 +25,11 @@ export class Palette {
   }
 
   private static hash(value: string): number {
-    let acc = 0
+    let accumulator = 0
     for (const character of value) {
       const codePoint = character.codePointAt(0) ?? 0
-      acc = (acc * HASH_MULTIPLIER + codePoint) >>> 0
+      accumulator = (accumulator * HASH_MULTIPLIER + codePoint) >>> 0
     }
-    return acc
+    return accumulator
   }
 }

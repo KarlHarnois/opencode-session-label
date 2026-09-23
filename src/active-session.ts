@@ -1,7 +1,7 @@
-import type { TuiPluginApi } from "@opencode-ai/plugin/tui"
+import type { RouteLookup } from "./route-lookup"
 
 export class ActiveSession {
-  constructor(private readonly route: TuiPluginApi["route"]) {}
+  constructor(private readonly route: RouteLookup) {}
 
   get id(): string | undefined {
     const current = this.route.current

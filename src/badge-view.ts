@@ -1,12 +1,13 @@
-import type { TuiPluginApi } from "@opencode-ai/plugin/tui"
 import { Badge } from "./badge"
 import { BadgeWidth } from "./badge-width"
 import type { ColorStore } from "./color-store"
+import type { KeyValueStore } from "./key-value-store"
 import { Palette } from "./palette"
+import type { SessionLookup } from "./session-lookup"
 import { SessionTitle } from "./session-title"
 import { Truncated } from "./truncated"
 
-const SIDEBAR_KV_KEY = "sidebar"
+const SIDEBAR_STORAGE_KEY = "sidebar"
 const DEFAULT_SIDEBAR_MODE = "auto"
 
 export class BadgeView {
@@ -14,10 +15,11 @@ export class BadgeView {
   private readonly title: SessionTitle
 
   constructor(
-    private readonly api: TuiPluginApi,
+    private readonly keyValueStore: KeyValueStore,
     private readonly store: ColorStore,
+    sessions: SessionLookup,
   ) {
-    this.title = new SessionTitle(api.state.session)
+    this.title = new SessionTitle(sessions)
   }
 
   badge(sessionID: string, terminalColumns: number): Badge {
@@ -31,6 +33,7 @@ export class BadgeView {
   }
 
   private get sidebarMode(): string {
-    return this.api.kv.get(SIDEBAR_KV_KEY, DEFAULT_SIDEBAR_MODE)
+    const mode = this.keyValueStore.get(SIDEBAR_STORAGE_KEY, DEFAULT_SIDEBAR_MODE)
+    return typeof mode === "string" ? mode : DEFAULT_SIDEBAR_MODE
   }
 }

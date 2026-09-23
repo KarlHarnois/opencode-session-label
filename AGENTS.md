@@ -14,15 +14,21 @@ opencode's key-value store.
 - `src/badge-view.ts` - builds a `Badge` for a session and terminal width.
 - `src/badge.ts` - the badge value: label, background, foreground, padded text.
 - `src/color-command.tsx` - the `/color` command and its select dialog.
-- `src/color-store.ts` - reactive per-session color overrides backed by the KV
-  store.
+- `src/color-store.ts` - reactive per-session color overrides backed by the
+  key-value store.
 - `src/palette.ts` - deterministic palette color for a session ID.
 - `src/contrast-text.ts` - readable text color for a background.
 - `src/session-title.ts` - the display title for a session.
 - `src/badge-width.ts` - available badge columns from terminal and sidebar.
 - `src/truncated.ts` - ellipsis truncation to a column budget.
 - `src/active-session.ts` - the session ID of the current route.
+- `src/signals.ts` - the `SignalFactory` port for reactive cells.
+- `src/solid-signals.ts` - the `SignalFactory` adapter over `solid-js`.
+- `src/key-value-store.ts` - the `KeyValueStore` port for persisted values.
+- `src/session-lookup.ts` - the `SessionLookup` port for session state.
+- `src/route-lookup.ts` - the `RouteLookup` port for the current route.
 - `src/session-prompt-slot.tsx` - renders the badge above the prompt.
+- `test/` - unit tests and hand-written doubles, no mocking library.
 - `package.json` - maps the `./tui` export to `src/index.tsx`.
 - `biome.json` - formatter and linter config.
 - `README.md` - install instructions for Arch and NixOS.
@@ -32,12 +38,18 @@ opencode's key-value store.
 - `exports["./tui"]` in `package.json` points at the TSX entry.
 - `src/index.tsx` default-exports a `TuiPluginModule` with `id` and `tui`.
 - Colors come from `Palette`, selected by `hash(sessionID) % palette.length`.
-- Overrides persist under the KV key `session-label.colors`, a
+- Overrides persist under the storage key `session-label.colors`, a
   `Record<sessionID, hex>`.
 - The `/color` command is registered through `api.keymap.registerLayer`.
 - The badge is injected via the `session_prompt` TUI slot.
+- Host capabilities reach the logic through narrow ports (`SignalFactory`,
+  `KeyValueStore`, `SessionLookup`, `RouteLookup`). `src/index.tsx` passes the
+  real implementations; tests pass doubles. Never import `solid-js`,
+  `@opentui/solid`, or `@opencode-ai/plugin/tui` outside their adapters.
 - Runtime imports (`@opentui/solid`, `solid-js`, `@opencode-ai/plugin/tui`) are
-  provided by opencode at load time. Never add them as dependencies.
+  provided by opencode at load time. Never add them to `dependencies` or
+  `devDependencies`, since Node resolves a local copy first and would shadow
+  the host's single instance.
 
 ## Conventions
 
@@ -48,6 +60,9 @@ opencode's key-value store.
   `/** @jsxImportSource @opentui/solid */` directive on the first line.
 - TUI plugin config is registered in `tui.json`, not `opencode.json`.
 - Comments must earn their place. Prefer clear names over explanatory comments.
+- No abbreviations in names. Spell out `keyValueStore`, `sessionID`,
+  `accumulator`, and the like; keep only established domain terms such as
+  `KV` in opencode's own API surface.
 
 ## Development
 
@@ -57,8 +72,13 @@ Formatting and linting are handled by Biome. Run it with npm:
 - `npm run fix` - apply safe fixes, including import sorting.
 - `npm run format` - format only.
 - `npm run lint` - lint only.
+- `npm test` - run the unit tests with Node's test runner via `tsx`.
 
-There is no build, typecheck, or test tooling in this repo. To try a change:
+Tests cover the logic classes. Host capability is injected through the ports
+above, so tests use hand-written doubles and no module mocking. The TUI wiring
+(`src/index.tsx`, `src/session-prompt-slot.tsx`) is not unit tested.
+
+There is no build or typecheck tooling. To try a change:
 
 1. Install the plugin per `README.md` (point `tui.json` at this directory).
 2. Restart opencode. Config and plugins load once at startup.
