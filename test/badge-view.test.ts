@@ -5,7 +5,6 @@ import { ColorStore } from "../src/color-store"
 import { Palette } from "../src/palette"
 import { FakeKeyValueStore } from "./fake-key-value-store"
 import { FakeSessionLookup } from "./fake-lookups"
-import { MemorySignals } from "./memory-signals"
 
 const COLORS_KEY = "session-label.colors"
 const SIDEBAR_KEY = "sidebar"
@@ -20,7 +19,7 @@ function createView(options: {
     [COLORS_KEY]: options.stored ?? {},
     ...(options.sidebarMode === undefined ? {} : { [SIDEBAR_KEY]: options.sidebarMode }),
   })
-  const store = new ColorStore(keyValueStore, COLORS_KEY, new MemorySignals())
+  const store = new ColorStore(keyValueStore, COLORS_KEY)
   return new BadgeView(keyValueStore, store, new FakeSessionLookup(options.titles))
 }
 

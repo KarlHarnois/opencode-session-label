@@ -2,13 +2,12 @@ import assert from "node:assert/strict"
 import { describe, it } from "node:test"
 import { ColorStore } from "../src/color-store"
 import { FakeKeyValueStore } from "./fake-key-value-store"
-import { MemorySignals } from "./memory-signals"
 
 const KEY = "session-label.colors"
 
 function createStore(initial: Record<string, unknown> = {}) {
   const keyValueStore = new FakeKeyValueStore(initial)
-  const store = new ColorStore(keyValueStore, KEY, new MemorySignals())
+  const store = new ColorStore(keyValueStore, KEY)
   return { keyValueStore, store }
 }
 

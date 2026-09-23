@@ -1,29 +1,23 @@
 import type { KeyValueStore } from "./key-value-store"
-import type { Getter, Setter, SignalFactory } from "./signals"
 
 type ColorMap = Record<string, string>
 
 export class ColorStore {
-  private readonly choices: Getter<ColorMap>
-  private readonly replace: Setter<ColorMap>
-
   constructor(
     private readonly keyValueStore: KeyValueStore,
     private readonly key: string,
-    signals: SignalFactory,
-  ) {
-    const [choices, replace] = signals.create(ColorStore.parse(keyValueStore.get(key, {})))
-    this.choices = choices
-    this.replace = replace
-  }
+  ) {}
 
   colorFor(sessionID: string, fallback: string): string {
-    return this.choices()[sessionID] ?? fallback
+    return this.overrides()[sessionID] ?? fallback
   }
 
   override(sessionID: string, color: string): void {
-    this.replace({ ...this.choices(), [sessionID]: color })
-    this.keyValueStore.set(this.key, this.choices())
+    this.keyValueStore.set(this.key, { ...this.overrides(), [sessionID]: color })
+  }
+
+  private overrides(): ColorMap {
+    return ColorStore.parse(this.keyValueStore.get(this.key, {}))
   }
 
   private static parse(stored: unknown): ColorMap {

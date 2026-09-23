@@ -14,16 +14,14 @@ opencode's key-value store.
 - `src/badge-view.ts` - builds a `Badge` for a session and terminal width.
 - `src/badge.ts` - the badge value: label, background, foreground, padded text.
 - `src/color-command.tsx` - the `/color` command and its select dialog.
-- `src/color-store.ts` - reactive per-session color overrides backed by the
-  key-value store.
+- `src/color-store.ts` - per-session color overrides read from the key-value
+  store.
 - `src/palette.ts` - deterministic palette color for a session ID.
 - `src/contrast-text.ts` - readable text color for a background.
 - `src/session-title.ts` - the display title for a session.
 - `src/badge-width.ts` - available badge columns from terminal and sidebar.
 - `src/truncated.ts` - ellipsis truncation to a column budget.
 - `src/active-session.ts` - the session ID of the current route.
-- `src/signals.ts` - the `SignalFactory` port for reactive cells.
-- `src/solid-signals.ts` - the `SignalFactory` adapter over `solid-js`.
 - `src/key-value-store.ts` - the `KeyValueStore` port for persisted values.
 - `src/session-lookup.ts` - the `SessionLookup` port for session state.
 - `src/route-lookup.ts` - the `RouteLookup` port for the current route.
@@ -42,9 +40,12 @@ opencode's key-value store.
   `Record<sessionID, hex>`.
 - The `/color` command is registered through `api.keymap.registerLayer`.
 - The badge is injected via the `session_prompt` TUI slot.
-- Host capabilities reach the logic through narrow ports (`SignalFactory`,
-  `KeyValueStore`, `SessionLookup`, `RouteLookup`). `src/index.tsx` passes the
-  real implementations; tests pass doubles. Never import `solid-js`,
+- `api.kv.get` is reactive per key, so an effect that reads the overrides
+  re-runs when they change. The plugin reads colors straight from the
+  key-value store and keeps no reactive state of its own.
+- Host capabilities reach the logic through narrow ports (`KeyValueStore`,
+  `SessionLookup`, `RouteLookup`). `src/index.tsx` passes the real
+  implementations; tests pass doubles. Never import `solid-js`,
   `@opentui/solid`, or `@opencode-ai/plugin/tui` outside their adapters.
 - Runtime imports (`@opentui/core`, `@opentui/solid`, `solid-js`,
   `@opencode-ai/plugin/tui`) are not injected into the plugin's module graph by
@@ -52,6 +53,10 @@ opencode's key-value store.
   `@opentui/core`, `@opentui/solid`, and `solid-js` are pinned in
   `dependencies`. `@opencode-ai/plugin/tui` is imported for types only and
   needs no runtime copy.
+- opencode rewrites the bare `solid-js` specifier to a shared renderer runtime
+  module, but a deep path such as `solid-js/dist/solid.js` escapes that rewrite
+  and builds a second reactive graph whose signals never notify the renderer's
+  effects. Avoid importing solid-js in the plugin at all.
 - When a module fails to import, opencode swallows the error: the plugin simply
   never registers and no toast or log line appears. The cause is visible only
   with `opencode --print-logs`, which writes loader errors to stderr.
