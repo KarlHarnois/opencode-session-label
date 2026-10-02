@@ -29,7 +29,7 @@ opencode's key-value store.
 - `test/` - unit tests and hand-written doubles, no mocking library.
 - `package.json` - maps the `./tui` export to `src/index.tsx`.
 - `biome.json` - formatter and linter config.
-- `README.md` - install instructions for Arch and NixOS.
+- `README.md` - Home Manager and CLI install instructions.
 
 ## How it works
 
@@ -95,6 +95,10 @@ There is no build or typecheck tooling. To try a change:
 
 For iteration without pushing on NixOS, override the flake input as described
 in the README.
+
+A failed load is silent in the TUI. To confirm a change loaded, check for the
+plugin id in `$XDG_STATE_HOME/opencode/plugin-meta.json`, which the host writes
+only after a successful module import.
 
 ## Git
 
